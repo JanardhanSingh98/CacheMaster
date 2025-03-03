@@ -1,4 +1,13 @@
-# 🚀 CacheMaster - High-Performance Caching Library
+# 🚀 CacheMaster - High-Performance Caching Library  
+
+![Python](https://img.shields.io/badge/python-3.7%2B-blue) ![MIT License](https://img.shields.io/badge/license-MIT-green)  
+
+[//]: # (![Package Version]&#40;https://img.shields.io/pypi/v/cachemaster&#41;  )
+
+[//]: # (![Build Status]&#40;https://img.shields.io/github/actions/workflow/status/JanardhanSingh98/CacheMaster/tests.yml&#41;  )
+
+[//]: # (![Code Quality]&#40;https://img.shields.io/lgtm/grade/python/g/JanardhanSingh98/CacheMaster.svg?logo=lgtm&logoWidth=18&#41;  )
+
 
 CacheMaster is a high-performance caching library that supports both **in-memory** and **Redis-based caching**. It provides a simple, flexible API for efficiently storing, retrieving, and managing cache data.
 
@@ -33,8 +42,17 @@ CacheMaster/
 ```
 
 ## 📦 Installation
+CacheMaster requires Python 3.7+ and the following dependencies:
+
+### **🔧 Dependencies:**
+- `redis>=4.5.0`  – Required for Redis-based caching
+- `pytest>=7.0.0` – For testing
+- `pytest-mock>=3.10` – Mocks for testing
+- `setuptools>=65.0.0`, `wheel>=0.40.0` – For packaging
+
+### **📥 Install via pip**
 ```sh
-pip install cachemaster
+pip install CacheMaster
 ```
 
 ## 🚀 Running the Cache Application
@@ -90,6 +108,18 @@ local_cache.decr("counter", 1)  # 11
 ```
 
 ## 🛠 Running Tests
+To ensure everything works correctly, install the development dependencies and run:
+
+```sh
+pip install -e .[dev]
+pytest tests/
+```
+
+If using `requirements.txt`:
+```sh
+pip install -r requirements.txt
+pytest tests/
+```
 To ensure everything works correctly, run:
 ```sh
 pytest tests/
