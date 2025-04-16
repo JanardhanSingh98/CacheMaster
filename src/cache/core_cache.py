@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict, List, Literal, Optional
 
 from src.cache.base_cache import CacheException
 from src.cache.mem_cache import LocMemCache
-from src.cache.redis_cache import RedisCacheClient
+from src.cache.redis_cache import RedisCache
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +33,8 @@ class CoreCache:
         elif self.cache_type == CacheType.REDIS_CACHE:
             redis_url = kwargs.get("redis_url")
             if not redis_url:
-                raise CacheException("Redis URL is missing. Pass `redis_url` in kwargs.")
-            self.redis_cache = RedisCacheClient(redis_url, *args, **kwargs)
+                logger.warning("Redis URL is missing. Using default Redis URL:- redis://localhost:6379/0.")
+            self.redis_cache = RedisCache("redis://localhost:6379/0", *args, **kwargs)
 
     def decorator_cache(self, namespace: str, timeout: int, keys: Optional[List[str]] = None) -> Callable:
         """
