@@ -1,6 +1,8 @@
-import unittest
 import time
-from src.cache.mem_cache import LocMemCache, CacheException
+import unittest
+
+from src.cache.mem_cache import CacheException, LocMemCache
+
 
 class TestLocMemCache(unittest.TestCase):
 
@@ -49,5 +51,6 @@ class TestLocMemCache(unittest.TestCase):
         time.sleep(2)
         self.assertEqual(self.cache.get("key8"), "value8")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

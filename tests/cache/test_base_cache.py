@@ -1,6 +1,8 @@
 import time
 import unittest
+
 from src.cache.base_cache import BaseCache, CacheException
+
 
 class TestBaseCache(unittest.TestCase):
 
@@ -49,5 +51,6 @@ class TestBaseCache(unittest.TestCase):
         time.sleep(2)
         self.assertEqual(self.cache.get("key8"), "value8")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

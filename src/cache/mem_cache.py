@@ -4,7 +4,7 @@ from collections import OrderedDict
 from threading import Lock
 from typing import Any, Dict, Optional, Union
 
-from src.cache.base_cache import BaseCache, DEFAULT_TIMEOUT, CacheException
+from src.cache.base_cache import DEFAULT_TIMEOUT, BaseCache, CacheException
 
 # Global in-memory store of cache data. Keyed by name, to provide multiple named local memory caches.
 _caches: Dict[str, OrderedDict] = {}
@@ -37,7 +37,7 @@ class LocMemCache(BaseCache):
         self.max_size = max_size  # New: Max size for cache eviction
 
     def add(
-            self, key: str, value: Any, timeout: Union[int, object] = DEFAULT_TIMEOUT, version: Optional[int] = None
+        self, key: str, value: Any, timeout: Union[int, object] = DEFAULT_TIMEOUT, version: Optional[int] = None
     ) -> bool:
         key = self.make_key(key, version=version)
         self.validate_key(key)
@@ -60,7 +60,7 @@ class LocMemCache(BaseCache):
         return pickle.loads(pickled_value)
 
     def set(
-            self, key: str, value: Any, timeout: Union[int, object] = DEFAULT_TIMEOUT, version: Optional[int] = None
+        self, key: str, value: Any, timeout: Union[int, object] = DEFAULT_TIMEOUT, version: Optional[int] = None
     ) -> None:
         """
         Store a key in the cache with an expiration timeout.
@@ -92,7 +92,7 @@ class LocMemCache(BaseCache):
             self._expire_info[key] = self.get_backend_timeout(timeout)
             return True
 
-    def incr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int:
+    def incr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int | float:
         """
         Increment a cache key's value.
 

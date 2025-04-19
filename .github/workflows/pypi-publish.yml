@@ -1,0 +1,55 @@
+name: Upload Python Package to PyPI
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger only when pushing tags like v1.0.0
+
+jobs:
+  build-and-publish:
+    name: Build and Publish with Poetry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'  # Or your preferred version
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Poetry
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Check formatting with black
+        run: |
+          poetry run black --check .
+
+      - name: Check typing annotations with mypy
+        run: |
+          poetry run mypy .
+
+      - name: Test with pytest
+        # Wrapped by coverage to generate coverage data
+        run: |
+          poetry run coverage run --omit="tests*" -m pytest
+
+      - name: Generate coverage report
+        run: |
+          poetry run coverage report
+
+      - name: Build the package
+        run: poetry build
+
+      - name: Publish to PyPI
+        run: poetry publish

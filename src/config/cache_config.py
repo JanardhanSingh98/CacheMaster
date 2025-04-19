@@ -1,14 +1,16 @@
 import logging
 import threading
+
 from src.cache.base_cache import CacheException
-from src.cache.core_cache import CoreCache, CacheType
+from src.cache.core_cache import CacheType, CoreCache
 
 logger = logging.getLogger(__name__)
+
 
 class SingletonCache:
     """Thread-safe Singleton class for managing a single instance of CoreCache."""
 
-    _instance: 'SingletonCache' = None
+    _instance: "SingletonCache" = None
     _cache: CoreCache | None = None
     _lock = threading.Lock()
 
@@ -16,7 +18,9 @@ class SingletonCache:
         raise CacheException("Use `get_instance()` instead of instantiating directly.")
 
     @classmethod
-    def get_instance(cls, app_name: str, cache_type: CacheType | str = CacheType.REDIS_CACHE, *args, **kwargs) -> CoreCache:
+    def get_instance(
+        cls, app_name: str, cache_type: CacheType | str = CacheType.REDIS_CACHE, *args, **kwargs
+    ) -> CoreCache:
         """
         Returns a singleton instance of CoreCache.
 

@@ -1,4 +1,47 @@
+[project]
+name = "CacheMaster"
+version = "0.1.0"
+description = "A flexible caching system with in-memory and Redis support"
+readme = "README.md"
+requires-python = ">=3.8,<4.0"
+license = { text = "MIT" }
+authors = [
+  { name = "Janardhan Singh", email = "janardhansingh1998@gmail.com" }
+]
+keywords = []
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://github.com/JanardhanSingh98/CacheMaster"
+Repository = "https://github.com/JanardhanSingh98/CacheMaster"
+Issues = "https://github.com/JanardhanSingh98/CacheMaster/issues"
+Documentation = "https://github.com/JanardhanSingh98/CacheMaster"
+
+[tool.poetry]
+packages = [{ include = "src" }]
+include = ["src/py.typed"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+black = "*"
+bumpver = "*"
+isort = "*"
+pip-tools = "*"
+mypy = "*"
+coverage = "*"
+flake8 = "*"
+setuptools = "*"
+redis = ">=4.0.0"
+
+
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=2.1.2"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
     

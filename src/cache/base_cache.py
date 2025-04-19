@@ -5,11 +5,13 @@ from typing import Callable, Dict, List, Optional, Union
 
 class CacheException(Exception):
     """Base exception for cache errors."""
+
     pass
 
 
 class CacheKeyError(CacheException):
     """Exception for invalid cache keys."""
+
     pass
 
 
@@ -171,7 +173,7 @@ class BaseCache:
         """Return True if the key is in the cache and has not expired."""
         return self.get(key, self._missing_key, version=version) is not self._missing_key
 
-    def incr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int:
+    def incr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int | float:
         """
         Increment a cache key's value.
 
@@ -196,7 +198,7 @@ class BaseCache:
         self.set(key, new_value, version=version)
         return new_value
 
-    def decr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int:
+    def decr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int | float:
         """
         Decrement a cache key's value.
         """
@@ -229,7 +231,8 @@ class BaseCache:
             NotImplementedError: Should be implemented by subclasses.
         """
         raise NotImplementedError(
-            "The 'clear' method must be implemented in the subclass (e.g., RedisCache, MemCache).")
+            "The 'clear' method must be implemented in the subclass (e.g., RedisCache, MemCache)."
+        )
 
     def incr_version(self, key: str, delta: int = 1, version: Optional[int] = None) -> int:
         """Add delta to the cache version for the supplied key."""

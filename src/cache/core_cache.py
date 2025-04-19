@@ -20,7 +20,7 @@ class CoreCache:
     cache_type: CacheType
 
     def __init__(
-            self, app_name: str, cache_type: Literal[CacheType.LOCAL_CACHE, CacheType.REDIS_CACHE], *args, **kwargs
+        self, app_name: str, cache_type: Literal[CacheType.LOCAL_CACHE, CacheType.REDIS_CACHE], *args, **kwargs
     ) -> None:
         self.app_name = app_name
         self.cache_type = CacheType(cache_type)
@@ -66,7 +66,7 @@ class CoreCache:
         return cache_decorator
 
     async def _handle_cache(
-            self, func: Callable, args: Any, kwargs: Any, namespace: str, timeout: int, keys: List[str]
+        self, func: Callable, args: Any, kwargs: Any, namespace: str, timeout: int, keys: List[str]
     ) -> Any:
         """Handles caching logic for both sync and async functions."""
 

@@ -1,11 +1,12 @@
-import pickle
-import re
 import itertools
-import redis
 import json
 import logging
+import pickle
+import re
 
-from src.cache.base_cache import CacheException, BaseCache, DEFAULT_TIMEOUT
+import redis
+
+from src.cache.base_cache import DEFAULT_TIMEOUT, BaseCache, CacheException
 
 logger = logging.getLogger(__name__)
 
