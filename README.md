@@ -1,13 +1,9 @@
-# 🚀 CacheMaster - High-Performance Caching Library  
+# 🚀 CacheMaster - High-Performance Caching Library
 
-![Python](https://img.shields.io/badge/python-3.7%2B-blue) ![MIT License](https://img.shields.io/badge/license-MIT-green)  
-
-[//]: # (![Package Version]&#40;https://img.shields.io/pypi/v/cachemaster&#41;  )
-
-[//]: # (![Build Status]&#40;https://img.shields.io/github/actions/workflow/status/JanardhanSingh98/CacheMaster/tests.yml&#41;  )
-
-[//]: # (![Code Quality]&#40;https://img.shields.io/lgtm/grade/python/g/JanardhanSingh98/CacheMaster.svg?logo=lgtm&logoWidth=18&#41;  )
-
+![Python](https://img.shields.io/badge/python-3.7%2B-blue)
+![MIT License](https://img.shields.io/badge/license-MIT-green)
+[![PyPI version](https://img.shields.io/pypi/v/cachemaster)](https://pypi.org/project/cachemaster/)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/JanardhanSingh98/CacheMaster/pypi-publish.yml?branch=main)](https://github.com/JanardhanSingh98/CacheMaster/actions/workflows/pypi-publish.yml)
 
 CacheMaster is a high-performance caching library that supports both **in-memory** and **Redis-based caching**. It provides a simple, flexible API for efficiently storing, retrieving, and managing cache data.
 
@@ -33,11 +29,12 @@ CacheMaster/
 │   │   ├── __init__.py
 │   │   ├── cache_config.py
 │── tests/
+│── CHANGELOG.md
+│── poetry.lock
 │── pyproject.toml
-│── setup.cfg
-│── setup.py
 │── README.md
 │── LICENSE
+│── .bumpver.toml
 │── .gitignore
 ```
 
@@ -45,14 +42,20 @@ CacheMaster/
 CacheMaster requires Python 3.7+ and the following dependencies:
 
 ### **🔧 Dependencies:**
-- `redis>=4.5.0`  – Required for Redis-based caching
+- `redis>=4.0.0`  – Required for Redis-based caching
 - `pytest>=7.0.0` – For testing
 - `pytest-mock>=3.10` – Mocks for testing
-- `setuptools>=65.0.0`, `wheel>=0.40.0` – For packaging
+- `poetry>=2.1.2` – For packaging
 
-### **📥 Install via pip**
+### **📥 Installation**
+
 ```sh
 pip install CacheMaster
+```
+Or using Poetry:
+
+```sh
+poetry add dict2objects
 ```
 
 ## 🚀 Running the Cache Application
@@ -107,23 +110,23 @@ local_cache.incr("counter", 2)  # 12
 local_cache.decr("counter", 1)  # 11
 ```
 
-## 🛠 Running Tests
-To ensure everything works correctly, install the development dependencies and run:
+## 🛠 Development & Contribution
 
-```sh
-pip install -e .[dev]
-pytest tests/
-```
+1. Clone the repository:
+   ```sh
+   git clone git@github.com:JanardhanSingh98/CacheMaster.git
+   cd CacheMaster
+   ```
+2. Install dependencies:
+   ```sh
+   poetry install
+   ```
+3. Run tests:
+   ```sh
+   poetry run coverage run --omit="tests*" -m pytest
+   ```
 
-If using `requirements.txt`:
-```sh
-pip install -r requirements.txt
-pytest tests/
-```
-To ensure everything works correctly, run:
-```sh
-pytest tests/
-```
+---
 
 ## 🎯 How CacheMaster Helps You
 - 🚀 **Boosts performance** by reducing redundant database queries.
@@ -131,6 +134,8 @@ pytest tests/
 - 🔄 **Scalable & flexible** with both local and distributed caching.
 - 📌 **Easy to integrate** with existing applications.
 
-## 📜 License
-MIT License
+## 🐜 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+### 🌟 **Like this project? Give it a star ⭐ on GitHub!**
 

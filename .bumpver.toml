@@ -1,0 +1,17 @@
+[bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "🔖 bump version: {old_version} → {new_version}"
+tag_message = "v{new_version}"
+tag_scope = "default"
+
+[bumpver.file_patterns]
+"pyproject.toml" = [
+  "version = \"{version}\""
+]
+"src/__init__.py" = [
+  "__version__ = \"{version}\""
+]
+"README.md" = [
+  "CacheMaster v{version}"
+]
