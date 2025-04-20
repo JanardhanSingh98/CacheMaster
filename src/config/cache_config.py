@@ -1,5 +1,6 @@
 import logging
 import threading
+from typing import Literal
 
 from src.cache.base_cache import CacheException
 from src.cache.core_cache import CacheType, CoreCache
@@ -10,7 +11,7 @@ logger = logging.getLogger(__name__)
 class SingletonCache:
     """Thread-safe Singleton class for managing a single instance of CoreCache."""
 
-    _instance: "SingletonCache" = None
+    _instance: "SingletonCache | None" = None
     _cache: CoreCache | None = None
     _lock = threading.Lock()
 
@@ -19,7 +20,11 @@ class SingletonCache:
 
     @classmethod
     def get_instance(
-        cls, app_name: str, cache_type: CacheType | str = CacheType.REDIS_CACHE, *args, **kwargs
+        cls,
+        app_name: str,
+        cache_type: Literal[CacheType.LOCAL_CACHE, CacheType.REDIS_CACHE] = CacheType.REDIS_CACHE,
+        *args,
+        **kwargs,
     ) -> CoreCache:
         """
         Returns a singleton instance of CoreCache.
@@ -38,11 +43,22 @@ class SingletonCache:
                 if cls._instance is None:
                     logger.debug("Initializing CoreCache singleton instance.")
                     cls._instance = cls.__new__(cls)
-                    cls._cache = CoreCache(app_name=app_name, cache_type=cache_type, *args, **kwargs)
+                    # Remove app_name and cache_type from kwargs to avoid duplication
+                    kwargs.pop("app_name", None)
+                    kwargs.pop("cache_type", None)
+                    cls._cache = CoreCache(app_name=app_name, cache_type=cache_type, *args, **kwargs)  # type: ignore[misc]
+
+        if cls._cache is None:
+            raise CacheException("CoreCache instance is not initialized.")
+
         return cls._cache
 
     @classmethod
-    def initialize_cache(cls, app_name: str, cache_type: CacheType | str = CacheType.REDIS_CACHE):
+    def initialize_cache(
+        cls,
+        app_name: str,
+        cache_type: Literal[CacheType.LOCAL_CACHE, CacheType.REDIS_CACHE] = CacheType.REDIS_CACHE,
+    ):
         """
         Initializes the cache connection.
 
@@ -52,8 +68,11 @@ class SingletonCache:
         """
         logger.debug("Initializing cache connection.")
         cls.get_instance(app_name, cache_type)
-        if cls._cache.cache_type == CacheType.REDIS_CACHE:
-            cls._cache.redis_cache.start()
+        if cls._cache and cls._cache.cache_type == CacheType.REDIS_CACHE:
+            if cls._cache.redis_cache:
+                cls._cache.redis_cache.start()
+            else:
+                raise CacheException("Redis cache is not initialized.")
 
     @classmethod
     def close_cache(cls):

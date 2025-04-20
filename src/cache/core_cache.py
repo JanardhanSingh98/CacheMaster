@@ -1,6 +1,6 @@
+from enum import Enum
 import inspect
 import logging
-from enum import Enum
 from typing import Any, Callable, Dict, List, Literal, Optional
 
 from src.cache.base_cache import CacheException

@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from src.cache.base_cache import CacheException
-from src.cache.core_cache import CacheType, CoreCache
+from src.cache.core_cache import CacheType
 from src.config.cache_config import SingletonCache
 
 
@@ -10,7 +10,6 @@ class TestSingletonCache(unittest.TestCase):
 
     @patch("src.config.cache_config.CoreCache")
     def test_get_instance_creates_singleton(self, MockCoreCache):
-        mock_cache = MockCoreCache.return_value
         instance1 = SingletonCache.get_instance("test_app", CacheType.LOCAL_CACHE)
         instance2 = SingletonCache.get_instance("test_app", CacheType.LOCAL_CACHE)
         self.assertIs(instance1, instance2)

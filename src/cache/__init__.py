@@ -1,6 +1,6 @@
 from .base_cache import BaseCache
 from .core_cache import CacheType, CoreCache
-from .mem_cache import LocMemCache, _caches, _expire_info, _locks
+from .mem_cache import LocMemCache
 from .redis_cache import RedisCache
 
-__all__ = ["BaseCache", "CoreCache", "CacheType", "LocMemCache", "RedisCache"]
+__all__ = ["BaseCache", "CacheType", "CoreCache", "LocMemCache", "RedisCache"]

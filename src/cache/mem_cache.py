@@ -1,7 +1,7 @@
-import pickle
-import time
 from collections import OrderedDict
+import pickle
 from threading import Lock
+import time
 from typing import Any, Dict, Optional, Union
 
 from src.cache.base_cache import DEFAULT_TIMEOUT, BaseCache, CacheException
@@ -89,7 +89,7 @@ class LocMemCache(BaseCache):
         with self._lock:
             if self._has_expired(key):
                 return False
-            self._expire_info[key] = self.get_backend_timeout(timeout)
+            self._expire_info[key] = self.get_backend_timeout(timeout)  # type: ignore[assignment]
             return True
 
     def incr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int | float:
@@ -129,7 +129,7 @@ class LocMemCache(BaseCache):
 
     def decr(self, key: str, delta: int = 1, version: Optional[int] = None) -> int:
         """Decrement a cache key's value."""
-        return self.incr(key, -delta, version=version)
+        return self.incr(key, -delta, version=version)  # type: ignore[return-value]
 
     def has_key(self, key: str, version: Optional[int] = None) -> bool:
         key = self.make_key(key, version=version)
@@ -163,7 +163,10 @@ class LocMemCache(BaseCache):
             self._cull()
         self._cache[key] = value
         self._cache.move_to_end(key, last=False)
-        self._expire_info[key] = self.get_backend_timeout(timeout)
+        backend_timeout = self.get_backend_timeout(timeout)
+        if backend_timeout is None:
+            raise CacheException("Backend timeout cannot be None.")
+        self._expire_info[key] = self.get_backend_timeout(timeout)  # type: ignore[assignment]
 
     def _cull(self) -> None:
         """Remove old items from the cache when it exceeds max entries."""

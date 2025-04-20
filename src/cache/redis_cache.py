@@ -82,7 +82,7 @@ class RedisCacheClient:
                 self._pools[index] = self._pool_class.from_url(self._servers[index], **self._pool_options)
             except Exception as e:
                 logger.error(f"Failed to create Redis connection pool for {self._servers[index]}: {e}")
-                raise CacheException(f"Redis connection pool error: {str(e)}")
+                raise CacheException(f"Redis connection pool error: {e!s}")
         return self._pools[index]
 
     def get_client(self, *, write=False):
@@ -102,7 +102,7 @@ class RedisCacheClient:
                 self._clients[key] = redis.Redis(connection_pool=pool)
             return self._clients[key]
         except Exception as e:
-            logger.error(f"Failed to get Redis client: {str(e)}")
+            logger.error(f"Failed to get Redis client: {e!s}")
             raise CacheException("Redis connection failed.")
 
     def add(self, key, value, timeout):

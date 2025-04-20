@@ -15,11 +15,10 @@ classifiers = [
   "Operating System :: OS Independent"
 ]
 
-[project.urls]
-Homepage = "https://github.com/JanardhanSingh98/CacheMaster"
-Repository = "https://github.com/JanardhanSingh98/CacheMaster"
-Issues = "https://github.com/JanardhanSingh98/CacheMaster/issues"
-Documentation = "https://github.com/JanardhanSingh98/CacheMaster"
+dependencies = [
+  "redis>=4.0.0",
+  "ruff (>=0.11.6,<0.12.0)"
+]
 
 [tool.poetry]
 packages = [{ include = "src" }]
@@ -29,14 +28,16 @@ include = ["src/py.typed"]
 pytest = "*"
 black = "*"
 bumpver = "*"
-isort = "*"
 pip-tools = "*"
 mypy = "*"
 coverage = "*"
-flake8 = "*"
 setuptools = "*"
-redis = ">=4.0.0"
 
+[project.urls]
+Homepage = "https://github.com/JanardhanSingh98/CacheMaster"
+Repository = "https://github.com/JanardhanSingh98/CacheMaster"
+Issues = "https://github.com/JanardhanSingh98/CacheMaster/issues"
+Documentation = "https://github.com/JanardhanSingh98/CacheMaster"
 
 [build-system]
 requires = ["poetry-core>=2.1.2"]
@@ -44,4 +45,19 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 120
-    
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "RUF"]
+ignore = ["E501"]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+known-first-party = ["cachemaster"]
